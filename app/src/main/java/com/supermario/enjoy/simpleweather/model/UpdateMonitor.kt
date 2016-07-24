@@ -1,5 +1,6 @@
 package com.supermario.enjoy.simpleweather.model
 
+import android.util.Log
 import rx.Observable
 
 /**
@@ -7,5 +8,14 @@ import rx.Observable
  */
 class UpdateMonitor {
 
-//    fun getWeather(): Observable<>
+    val api: RestApi
+    init {
+        api = RestApi()
+    }
+    fun getWeather(city: String): Observable<String> {
+        return api.getTestData().flatMap { data ->
+            Log.d("jjj", "data:" + data)
+            Observable.just(data.data.first().now.tmp) }
+
+    }
 }

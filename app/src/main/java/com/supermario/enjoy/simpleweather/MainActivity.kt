@@ -11,6 +11,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
+import com.supermario.enjoy.simpleweather.model.UpdateMonitor
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -68,6 +72,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
         if (id == R.id.nav_camera) {
+            val monitor = UpdateMonitor()
+            monitor.getWeather("Qingdao")
+                   .subscribeOn(Schedulers.io())
+                   .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        data ->
+                        val txt = findViewById(R.id.hello_text) as TextView
+                        txt.text = data
+                    }
+
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
