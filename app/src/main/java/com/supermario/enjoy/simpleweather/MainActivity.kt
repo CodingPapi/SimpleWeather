@@ -9,20 +9,34 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import com.supermario.enjoy.simpleweather.model.UpdateMonitor
+import com.supermario.enjoy.simpleweather.model.*
+import rx.Observable
+import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    var helloText: TextView? = null
+//    val updateMonitor: UpdateMonitor by lazy {UpdateMonitor()}
+
+    val restApi: RestApi
+    val updateMonitor: UpdateMonitor
+    init {
+        updateMonitor = UpdateMonitor()
+        restApi = RestApi()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+        helloText = findViewById(R.id.hello_text) as TextView
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show() }
@@ -66,24 +80,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return super.onOptionsItemSelected(item)
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         val id = item.itemId
 
         if (id == R.id.nav_camera) {
-            val monitor = UpdateMonitor()
-            monitor.getWeather("Qingdao")
-                   .subscribeOn(Schedulers.io())
-                   .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe {
-                        data ->
-                        val txt = findViewById(R.id.hello_text) as TextView
-                        txt.text = data
-                    }
+            val start = System.currentTimeMillis()
+            Log.d("kkk","touch start")
+
+//            updateMonitor.testRxjavaThread()
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe { text -> helloText?.text = text }
+
+            restApi.getWeatherData("Qingdao", WeatherApi.KEY)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { t ->
+                        Log.d("jjj", Log.getStackTraceString(Throwable()))
+                        helloText?.text = t.data.first().basic.city }
+//
+            val end = System.currentTimeMillis()
+            Log.d("kkk", "cost time :" + (end - start))
+            Log.d("kkk","touch end")
 
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            helloText?.text = ""
 
         } else if (id == R.id.nav_slideshow) {
 

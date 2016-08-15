@@ -15,6 +15,9 @@ interface WeatherApi {
     }
 
     @GET("weather")
-    fun getWeather(@Query("city") city: String, @Query("key") key: String) : Observable<Weather>
+    fun getWeather(@Query("city") city: String, @Query("key") key: String) : Call<Weather>
+
+    @GET("weather")
+    fun getWeatherObservable(@Query("city") city: String, @Query("key") key: String) : Observable<Weather>
 
 }

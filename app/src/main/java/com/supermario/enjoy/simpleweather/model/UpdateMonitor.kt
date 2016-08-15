@@ -2,20 +2,26 @@ package com.supermario.enjoy.simpleweather.model
 
 import android.util.Log
 import rx.Observable
+import rx.Scheduler
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 /**
  * Created by supermario on 2016/7/17.
  */
 class UpdateMonitor {
 
-    val api: RestApi
-    init {
-        api = RestApi()
+    val api: RestApi by lazy { RestApi() }
+
+    fun getOriginalWeather(city: String): Observable<Weather> {
+        return  api.getWeatherData(city, WeatherApi.KEY)
     }
-    fun getWeather(city: String): Observable<String> {
-        return api.getTestData().flatMap { data ->
-            Log.d("jjj", "data:" + data)
-            Observable.just(data.data.first().now.tmp) }
+
+    fun testRxjavaThread(): Observable<String> {
+        val ob = Observable.create<String> { subscriber -> Thread.sleep(10000)
+        subscriber.onNext("sleep")
+        subscriber.onCompleted()}
+        return ob
 
     }
 }
