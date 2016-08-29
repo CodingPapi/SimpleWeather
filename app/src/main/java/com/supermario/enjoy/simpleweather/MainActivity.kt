@@ -18,17 +18,17 @@ import rx.Observable
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var helloText: TextView? = null
 //    val updateMonitor: UpdateMonitor by lazy {UpdateMonitor()}
 
-    val restApi: RestApi
+    val restApi: RestApi by lazy { RestApi.getInstance(this) }
     val updateMonitor: UpdateMonitor
     init {
         updateMonitor = UpdateMonitor()
-        restApi = RestApi()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +94,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                    .subscribeOn(Schedulers.io())
 //                    .observeOn(AndroidSchedulers.mainThread())
 //                    .subscribe { text -> helloText?.text = text }
+
+
+            Log.d("kkk","Rest:" + restApi)
 
             restApi.getWeatherData("Qingdao", WeatherApi.KEY)
                     .subscribeOn(Schedulers.io())

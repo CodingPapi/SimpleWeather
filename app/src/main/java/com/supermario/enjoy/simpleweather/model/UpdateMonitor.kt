@@ -11,11 +11,11 @@ import rx.schedulers.Schedulers
  */
 class UpdateMonitor {
 
-    val api: RestApi by lazy { RestApi() }
+//    val api: RestApi by lazy { RestApi() }
 
-    fun getOriginalWeather(city: String): Observable<Weather> {
-        return  api.getWeatherData(city, WeatherApi.KEY)
-    }
+//    fun getOriginalWeather(city: String): Observable<Weather> {
+//        return  api.getWeatherData(city, WeatherApi.KEY)
+//    }
 
     fun testRxjavaThread(): Observable<String> {
         val ob = Observable.create<String> { subscriber -> Thread.sleep(10000)

@@ -1,5 +1,6 @@
 package com.supermario.enjoy.simpleweather.model
 
+import android.content.Context
 import android.util.Log
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -15,12 +16,24 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.xml.transform.Transformer
+import kotlin.properties.Delegates
 
 /**
  * Created by supermario on 2016/7/20.
  */
-class RestApi {
-    var weatherApi: WeatherApi
+class RestApi private constructor(context: Context) {
+
+    companion object  {
+        var api: RestApi? = null
+        fun getInstance(context: Context): RestApi {
+            if (api == null) {
+                api = RestApi(context)
+            }
+            return api!!
+        }
+    }
+    val weatherApi: WeatherApi
+
     init {
         val logInterceptor = HttpLoggingInterceptor()
         logInterceptor.level = HttpLoggingInterceptor.Level.BODY
