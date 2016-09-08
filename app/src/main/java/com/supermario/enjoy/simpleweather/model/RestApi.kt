@@ -10,13 +10,10 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import rx.Observable
-import okhttp3.logging.HttpLoggingInterceptor.Level;
 import rx.Scheduler
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
-import javax.xml.transform.Transformer
-import kotlin.properties.Delegates
 
 /**
  * Created by supermario on 2016/7/20.
@@ -33,6 +30,13 @@ class RestApi private constructor(context: Context) {
         }
     }
     val weatherApi: WeatherApi
+
+    fun <T> applyTransformer(): Observable.Transformer<T, T> {
+        return Observable.Transformer { observable ->
+            observable.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+        }
+    }
 
     init {
         val logInterceptor = HttpLoggingInterceptor()
@@ -54,8 +58,9 @@ class RestApi private constructor(context: Context) {
     }
 
     fun getWeatherData(city: String, key: String): Observable<Weather> {
-        return weatherApi.getWeatherObservable(city, key)
-//        return Observable.fromCallable { weatherApi.getWeather("qingdao",WeatherApi.KEY).execute().body() }
+//        return weatherApi.getWeatherObservable(city, key)
+        return Observable.fromCallable { weatherApi.getWeather(city, key).execute().body() }
+                .compose(applyTransformer<Weather>())
     }
 
     fun getTestData(): Observable<Weather> {

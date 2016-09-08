@@ -99,8 +99,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Log.d("kkk","Rest:" + restApi)
 
             restApi.getWeatherData("Qingdao", WeatherApi.KEY)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { t ->
                         Log.d("jjj", Log.getStackTraceString(Throwable()))
                         helloText?.text = t.data.first().basic.city }
