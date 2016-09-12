@@ -2,7 +2,7 @@ package com.supermario.enjoy.simpleweather.model
 
 import com.fasterxml.jackson.annotation.*
 
-data class Weather(@JsonProperty("HeWeather data service 3.0") val data: List<WeatherData>)
+data class Weather(@JsonProperty("HeWeather data service 3.0") val data: List<WeatherData>?)
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class WeatherData(val alarms: List<Alarms>?,

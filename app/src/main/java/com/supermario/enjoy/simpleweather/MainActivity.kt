@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             restApi.getWeatherData("Qingdao", WeatherApi.KEY)
                     .subscribe { t ->
                         Log.d("jjj", Log.getStackTraceString(Throwable()))
-                        helloText?.text = t.data.first().basic.city }
+                        helloText?.text = t?.data?.first()?.basic?.city }
 //
             val end = System.currentTimeMillis()
             Log.d("kkk", "cost time :" + (end - start))
