@@ -15,7 +15,7 @@ class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        CrashReport.initCrashReport(applicationContext, "107c3f69b9", true)
+//        CrashReport.initCrashReport(applicationContext, "107c3f69b9", true)
         globalCacheDir = applicationContext.cacheDir.toString()
     }
 }
