@@ -2,6 +2,7 @@ package com.supermario.enjoy.simpleweather
 
 import android.app.Application
 import android.content.Context
+import com.tencent.bugly.crashreport.CrashReport
 import kotlin.properties.Delegates
 
 /**
@@ -14,6 +15,7 @@ class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        CrashReport.initCrashReport(applicationContext, "107c3f69b9", true)
         globalCacheDir = applicationContext.cacheDir.toString()
     }
 }
