@@ -47,12 +47,23 @@ class RestApi private constructor(context: Context) {
     val cacheInterceptor: Interceptor by lazy {
         Interceptor { chain ->
             var request: Request = chain.request()
-            request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build()
+            val connectiveStatus = BaseApplication.networkInfo?.isAvailable ?: false
+            if (!connectiveStatus) {
+                request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build()
+            }
             val response: Response = chain.proceed(request)
-            val maxAge: Int = 60 * 60 * 24
-            response.newBuilder()
-                    .header("Cache-Control", "public, max-age=" + maxAge)
-                    .build()
+            if (connectiveStatus) {
+                val maxAge: Int = 0
+                response.newBuilder()
+                        .header("Cache-Control", "public, max-age=" + maxAge)
+                        .build()
+
+            } else {
+                val maxStale: Int = 60 * 60 * 24
+                response.newBuilder()
+                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                        .build()
+            }
 
         }
     }
@@ -84,7 +95,7 @@ class RestApi private constructor(context: Context) {
     fun getWeatherData(city: String, key: String): Observable<Weather> {
 //        return weatherApi.getWeatherObservable(city, key)
         return Observable.fromCallable { weatherApi.getWeather(city, key).execute().body() }
-                .compose(applyTransformer<Weather>())
+                .compose(applyTransformer<Weather?>())
     }
 
     fun getTestData(): Observable<Weather> {
