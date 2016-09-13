@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -83,7 +84,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (id == R.id.nav_camera) {
             restApi.getWeatherData("Qingdao", WeatherApi.KEY)
                     .subscribe { t ->
-                        helloText?.text = t?.data?.first()?.basic?.city }
+                        Log.d("kkk", "code:" + t.code())
+                        if (t.code() == 504) {
+                            helloText?.text = "network error"
+                        } else {
+                            helloText?.text = t?.body()?.data?.first()?.basic?.city }
+                        }
         } else if (id == R.id.nav_gallery) {
             helloText?.text = ""
 

@@ -8,6 +8,7 @@ import com.supermario.enjoy.simpleweather.BaseApplication
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava.HttpException
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import rx.Observable
@@ -17,6 +18,7 @@ import rx.lang.kotlin.onError
 import rx.schedulers.Schedulers
 import java.io.File
 import java.util.concurrent.TimeUnit
+import retrofit2.Response as rResponse
 
 /**
  * Created by supermario on 2016/7/20.
@@ -91,14 +93,10 @@ class RestApi private constructor(context: Context) {
         weatherApi = retrofit.create(WeatherApi::class.java)
     }
 
-    fun getWeatherData(city: String, key: String): Observable<Weather> {
+    fun getWeatherData(city: String, key: String): Observable<rResponse<Weather?>> {
 //        return weatherApi.getWeatherObservable(city, key)
-        return Observable.fromCallable { weatherApi.getWeather(city, key).execute().body() }
-                .compose(applyTransformer<Weather?>())
-    }
-
-    fun getTestData(): Observable<Weather> {
-        return getWeatherData("qingdao", WeatherApi.KEY)
+        return Observable.fromCallable { weatherApi.getWeather(city, key).execute()}
+                .compose(applyTransformer<rResponse<Weather?>>())
     }
 
 }
