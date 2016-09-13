@@ -47,7 +47,7 @@ class RestApi private constructor(context: Context) {
     val cacheInterceptor: Interceptor by lazy {
         Interceptor { chain ->
             var request: Request = chain.request()
-            val connectiveStatus = BaseApplication.networkInfo?.isAvailable ?: false
+            val connectiveStatus = BaseApplication.getNetworkInfo()?.isAvailable ?: false
             if (!connectiveStatus) {
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build()
             }
@@ -89,7 +89,6 @@ class RestApi private constructor(context: Context) {
     init {
 
         weatherApi = retrofit.create(WeatherApi::class.java)
-        Log.d("jjj", "RestApi init weatherApi:" + weatherApi)
     }
 
     fun getWeatherData(city: String, key: String): Observable<Weather> {

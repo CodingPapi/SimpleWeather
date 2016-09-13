@@ -9,16 +9,10 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import com.supermario.enjoy.simpleweather.model.*
-import rx.Observable
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -87,27 +81,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
         if (id == R.id.nav_camera) {
-            val start = System.currentTimeMillis()
-            Log.d("kkk","touch start")
-
-//            updateMonitor.testRxjavaThread()
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe { text -> helloText?.text = text }
-
-
-            Log.d("kkk","Rest:" + restApi)
-
             restApi.getWeatherData("Qingdao", WeatherApi.KEY)
                     .subscribe { t ->
-                        Log.d("jjj", Log.getStackTraceString(Throwable()))
                         helloText?.text = t?.data?.first()?.basic?.city }
-//
-            val end = System.currentTimeMillis()
-            Log.d("kkk", "cost time :" + (end - start))
-            Log.d("kkk","touch end")
-
-            // Handle the camera action
         } else if (id == R.id.nav_gallery) {
             helloText?.text = ""
 
