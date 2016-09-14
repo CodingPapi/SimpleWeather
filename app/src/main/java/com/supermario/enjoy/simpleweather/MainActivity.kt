@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var helloText: TextView? = null
 //    val updateMonitor: UpdateMonitor by lazy {UpdateMonitor()}
 
-    val restApi: RestApi by lazy { RestApi.getInstance(this) }
     val updateMonitor: UpdateMonitor
     init {
         updateMonitor = UpdateMonitor()
@@ -82,7 +81,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
         if (id == R.id.nav_camera) {
-            restApi.getWeatherData("Qingdao", WeatherApi.KEY)
+            RestApi.getWeatherData("Qingdao", WeatherApi.KEY)
                     .subscribe { t ->
                         Log.d("kkk", "code:" + t.code())
                         if (t.code() == 504) {

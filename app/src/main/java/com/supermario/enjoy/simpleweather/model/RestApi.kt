@@ -23,17 +23,7 @@ import retrofit2.Response as rResponse
 /**
  * Created by supermario on 2016/7/20.
  */
-class RestApi private constructor(context: Context) {
-
-    companion object {
-        var api: RestApi? = null
-        fun getInstance(context: Context): RestApi {
-            if (api == null) {
-                api = RestApi(context)
-            }
-            return api!!
-        }
-    }
+object RestApi {
 
     val weatherApi: WeatherApi
 
@@ -95,8 +85,12 @@ class RestApi private constructor(context: Context) {
 
     fun getWeatherData(city: String, key: String): Observable<rResponse<Weather?>> {
 //        return weatherApi.getWeatherObservable(city, key)
-        return Observable.fromCallable { weatherApi.getWeather(city, key).execute()}
+        return Observable.fromCallable { weatherApi.getWeather(city, key).execute() }
                 .compose(applyTransformer<rResponse<Weather?>>())
+                .onErrorResumeNext { e ->
+                    Log.d("jjj", "error:" + e)
+                    Observable.create {  }
+                }
     }
 
 }
