@@ -13,7 +13,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import com.supermario.enjoy.simpleweather.model.*
+import com.supermario.enjoy.simpleweather.module.*
+import com.supermario.enjoy.simpleweather.module.api.WeatherApi
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 

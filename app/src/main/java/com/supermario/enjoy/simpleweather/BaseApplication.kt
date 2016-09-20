@@ -4,9 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import com.supermario.enjoy.simpleweather.model.DaggerMainComponent
-import com.supermario.enjoy.simpleweather.model.MainComponent
-import com.supermario.enjoy.simpleweather.model.ModuleStore
+import com.supermario.enjoy.simpleweather.module.di.DaggerMainComponent
+import com.supermario.enjoy.simpleweather.module.di.MainComponent
+import com.supermario.enjoy.simpleweather.module.di.RestModule
 import com.tencent.bugly.crashreport.CrashReport
 
 /**
@@ -28,7 +28,7 @@ class BaseApplication : Application() {
 //        CrashReport.initCrashReport(applicationContext, "107c3f69b9", true)
         globalContext = applicationContext
         globalCacheDir = applicationContext.cacheDir.toString()
-        mainComponent = DaggerMainComponent.builder().moduleStore(ModuleStore(globalContext)).build()
+        mainComponent = DaggerMainComponent.builder().restModule(RestModule(globalContext)).build()
     }
 
 }

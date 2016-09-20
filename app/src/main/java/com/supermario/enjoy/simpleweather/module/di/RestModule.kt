@@ -1,9 +1,10 @@
-package com.supermario.enjoy.simpleweather.model
+package com.supermario.enjoy.simpleweather.module.di
 
 import android.content.Context
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.supermario.enjoy.simpleweather.BaseApplication
+import com.supermario.enjoy.simpleweather.module.api.WeatherApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.*
@@ -19,7 +20,7 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Singleton
  * Created by lijia8 on 2016/9/20.
  */
 @Module
-class ModuleStore(val context: Context) {
+class RestModule(val context: Context) {
 
     @Provides
     fun provideContext(): Context = context
