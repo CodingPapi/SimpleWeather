@@ -1,4 +1,4 @@
-package com.supermario.enjoy.simpleweather.module.api
+package com.supermario.enjoy.simpleweather.data.api
 
 import retrofit2.Call
 import retrofit2.http.GET

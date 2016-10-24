@@ -4,9 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import com.supermario.enjoy.simpleweather.module.di.DaggerMainComponent
-import com.supermario.enjoy.simpleweather.module.di.MainComponent
-import com.supermario.enjoy.simpleweather.module.di.RestModule
+import com.supermario.enjoy.simpleweather.data.di.DaggerMainComponent
+import com.supermario.enjoy.simpleweather.data.di.MainComponent
+import com.supermario.enjoy.simpleweather.data.di.RestModule
 import com.tencent.bugly.crashreport.CrashReport
 
 /**

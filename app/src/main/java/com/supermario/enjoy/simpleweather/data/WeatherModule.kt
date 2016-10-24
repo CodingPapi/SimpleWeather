@@ -1,4 +1,4 @@
-package com.supermario.enjoy.simpleweather.module
+package com.supermario.enjoy.simpleweather.data
 
 import android.util.Log
 import rx.Observable

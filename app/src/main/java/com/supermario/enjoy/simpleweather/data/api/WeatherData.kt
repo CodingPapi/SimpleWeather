@@ -1,4 +1,4 @@
-package com.supermario.enjoy.simpleweather.module.api
+package com.supermario.enjoy.simpleweather.data.api
 
 import com.fasterxml.jackson.annotation.*
 

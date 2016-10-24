@@ -1,10 +1,10 @@
-package com.supermario.enjoy.simpleweather.module.di
+package com.supermario.enjoy.simpleweather.data.di
 
 import android.content.Context
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.supermario.enjoy.simpleweather.BaseApplication
-import com.supermario.enjoy.simpleweather.module.api.WeatherApi
+import com.supermario.enjoy.simpleweather.data.api.WeatherApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.*

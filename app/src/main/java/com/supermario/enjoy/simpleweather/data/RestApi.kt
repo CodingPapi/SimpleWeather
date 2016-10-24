@@ -1,10 +1,10 @@
-package com.supermario.enjoy.simpleweather.module
+package com.supermario.enjoy.simpleweather.data
 
 import android.content.Context
 import android.util.Log
 import com.supermario.enjoy.simpleweather.BaseApplication
-import com.supermario.enjoy.simpleweather.module.api.Weather
-import com.supermario.enjoy.simpleweather.module.api.WeatherApi
+import com.supermario.enjoy.simpleweather.data.api.Weather
+import com.supermario.enjoy.simpleweather.data.api.WeatherApi
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
