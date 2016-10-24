@@ -1,10 +1,12 @@
 package com.supermario.enjoy.simpleweather.WeatherView
 
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -14,7 +16,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.supermario.enjoy.simpleweather.R
 
-class WeatherShowingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class WeatherShowingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+        WeatherShowingFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +36,16 @@ class WeatherShowingActivity : AppCompatActivity(), NavigationView.OnNavigationI
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
+
+        var fragmentView: WeatherShowingFragment? = supportFragmentManager.findFragmentById(R.id.fragment_container) as WeatherShowingFragment?
+        if (fragmentView == null) {
+            fragmentView = WeatherShowingFragment.newInstance("", "")
+            replaceWithFragment(fragmentView, R.id.fragment_container)
+        }
+    }
+
+    fun replaceWithFragment(fragment: Fragment, resId: Int) {
+        supportFragmentManager.beginTransaction().replace(resId, fragment).commit()
     }
 
     override fun onBackPressed() {
@@ -86,5 +99,9 @@ class WeatherShowingActivity : AppCompatActivity(), NavigationView.OnNavigationI
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onFragmentInteraction(uri: Uri?) {
+
     }
 }
